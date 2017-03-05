@@ -1,0 +1,40 @@
+//your controller
+ public JsonResult addEmployee( Employee emp)
+        {
+            
+
+            db.employee.Add(emp);
+            db.SaveChanges();
+            return Json("Success", JsonRequestBehavior.AllowGet);
+         
+        }
+//submit form using ajax
+
+   <script>
+        $(document).ready(function () {
+
+            $("#btnSave").click(function () {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "addEmployee",
+                    data: {
+                        EmployeeName: $("#txtName").val(),
+                        Countary: $("#txtCountary").val(),
+                        State: $("#txtState").val(),
+                        City: $("#txtcity").val()
+                    },
+                    success:function(data)
+                    {                      
+                        alert("Record save Successfully");
+                        $("#txtName").val('')
+                        $("#txtCountary").val('');
+                        $("#txtState").val('');
+                        $("#txtcity").val('');
+                        
+                    }
+                });
+            });
+        });
+    </script>
