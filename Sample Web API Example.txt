@@ -1,0 +1,29 @@
+//model class 
+public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal price { get; set; }
+        public int qty { get; set; }
+    }
+//in memory collection example 
+public class ProductController : ApiController
+    {
+        List<Product> product = new List<Product>()
+        {
+            new Product() { Id=1,Name="t shirt",price=200,qty=5},
+            new Product() { Id=2,Name="t shirt 2",price=300,qty=4},
+        };
+        public IEnumerable<Product> Get()
+        {
+            return product.ToList();
+        }
+        public IHttpActionResult Get(int id)
+        {
+            var product1 = product.Where(s => s.Id == id);
+            if (product1 == null)
+                return NotFound();
+            return Ok(product1);
+
+        }
+    }
