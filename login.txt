@@ -1,0 +1,54 @@
+*********************************************Login**************************
+
+//model class*********************
+public class UserModel
+    {
+        [Key]
+        public int UserId { get; set; }
+        [Required(ErrorMessage ="Please enter valid user name")]
+        public string UserName { get; set; }
+        [Required(ErrorMessage = "please enter correct password")]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+        public string Password { get; set; }
+    }
+
+*************************************Controller************************************
+  [HttpPost]
+        public ActionResult Login(UserModel u)
+        {
+            if(ModelState.IsValid)
+            {
+                using (UserContext uc=new UserContext())
+                {
+                   var v= uc.UserModel.Where(s => s.UserName.Equals(u.UserName) && s.Password.Equals(u.Password)).FirstOrDefault();
+                    if(v !=null)
+                    {
+                        Session["userId"] = v.UserId.ToString();
+                        Session["userName"] = v.UserName.ToString();
+                        return RedirectToAction("viewDeatil");
+                    }
+                }
+            }
+            return View();
+        }
+        public ActionResult viewDeatil()
+        {
+            if(Session["userId"]!=null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
+        }
+
+***********************************************************Indexpage***************************************
+
+@if(Session["userName"]!=null)
+{
+    <text>
+        Welcome @Session["userName"].ToString();
+     </text>
+}
