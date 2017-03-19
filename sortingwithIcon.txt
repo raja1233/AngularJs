@@ -1,0 +1,83 @@
+////sorting by icon
+<body ng-controller="myController">
+    <h1>Student</h1>
+  
+   
+   <table class=" table table-bordered table-hover" >
+       <thead>
+           <tr>
+               <th ng-click="sortData('fName')">Fname<div ng-class="getSortClass('fName')"></div></th>
+               <th ng-click="sortData('date')">date of Birth <div ng-class="getSortClass('date')"></div></th>
+               <th ng-click="sortData('salary')">salary(Number) <div ng-class="getSortClass('salary')"></div></th>
+               <th ng-click="sortData('salary')">salary(Currency) <div ng-class="getSortClass('salary')"></div></th>
+               <th ng-click="sortData('gender')">gender<div ng-class="getSortClass('gender')"></div></th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr ng-repeat="employee in employee | orderBy:sortColumn:reverseSort">
+               <td>{{employee.fName }}</td>
+               <td>{{employee.date | date:"dd/MM/yyyy"}}</td>
+               <td>{{employee.salary |  number:2}}</td>
+               <td>{{employee.salary |  currency }}</td>
+               <td>
+                   {{employee.gender | lowercase}}
+               </td>
+           </tr>
+       </tbody>
+   </table>
+
+
+/////////controller//////////////////
+var myApp = angular.module("myModule", [])
+                    .controller("myController", function ($scope) {
+
+                        var employees = [
+                            { fName: "Ram", date: new Date("November 28,1990"), salary:5555.335,gender:"Male"},
+                             { fName: "Shyam", date: new Date("November 28,1991"), salary: 5555, gender: "Female" },
+                              { fName: "Mohan", date: new Date("November 28,1992"), salary: 5555, gender: "Male" },
+                               { fName: "Raja", date: new Date("November 28,1993"), salary: 5555, gender: "Male" }
+                        ];
+                        $scope.employee = employees;
+                        $scope.sortColumn = "date";
+                        $scope.reverseSort = false;
+                        $scope.sortData=function(column)
+                        {
+                            $scope.reverseSort = ($scope.sortColumn == column) ? !$scope.reverseSort : false;
+                            $scope.sortColumn = column;
+                        }
+                        $scope.getSortClass=function(column)
+                        {
+                            if($scope.sortColumn==column)
+                            {
+                                return $scope.reverseSort ? "arrow-down" : "arrow-up";
+                            }
+                            return "";
+                        }
+                    });
+
+///////////////////////////////////////////
+css file
+///////////////////
+body {
+}
+
+th{
+    cursor:pointer;
+}
+.arrow-up
+{
+    width:0;
+    height:0;
+    border-left:5px solid transparent;
+    border-right:5px solid transparent;
+    border-bottom:10px solid black;
+    display:inline-block;
+}
+.arrow-down{
+     width:0;
+    height:0;
+    border-left:5px solid transparent;
+    border-right:5px solid transparent;
+    border-bottom:10px solid black;
+    display:inline-block;
+}
