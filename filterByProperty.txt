@@ -1,0 +1,50 @@
+ ///filte ascending and descending order////
+@****************************************************************@
+
+<body ng-controller="myController">
+    <h1>Student</h1>
+  SortOrder:<select ng-model="sortColumn">
+                <option value="fName">Name</option>
+                <option value="date">DOB</option>
+                <option value="salary">Salary</option>
+                <option value="-gender">Gender</option>//minus=>desc and add(+)=>asc
+    </select>
+   
+   <table class=" table table-bordered table-hover" >
+       <thead>
+           <tr>
+               <th>Fname</th>
+               <th>date of Birth</th>
+               <th>salary(Number)</th>
+               <th>salary(Currency)</th>
+               <th>gender</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr ng-repeat="employee in employee | orderBy:sortColumn">
+               <td>{{employee.fName }}</td>
+               <td>{{employee.date | date:"dd/MM/yyyy"}}</td>
+               <td>{{employee.salary |  number:2}}</td>
+               <td>{{employee.salary |  currency }}</td>
+               <td>
+                   {{employee.gender | lowercase}}
+               </td>
+           </tr>
+       </tbody>
+   </table>
+</body>
+
+//////////////////////////////////controller////////////////////
+var myApp = angular.module("myModule", [])
+                    .controller("myController", function ($scope) {
+
+                        var employees = [
+                            { fName: "Ram", date: new Date("November 28,1990"), salary:5555.335,gender:"Male"},
+                             { fName: "Shyam", date: new Date("November 28,1990"), salary: 5555, gender: "Female" },
+                              { fName: "Mohan", date: new Date("November 28,1990"), salary: 5555, gender: "Male" },
+                               { fName: "Raja", date: new Date("November 28,1990"), salary: 5555, gender: "Male" }
+                        ];
+                        $scope.employee = employees;
+                        $scope.sortColumn = "date";
+
+                    });
