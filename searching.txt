@@ -1,0 +1,44 @@
+//searching by angularJs///
+<body ng-controller="myController">
+    <h1>Student</h1>
+  
+   Search:<input type="text" class="form-control" ng-model="textSearch.fName"/>
+    <br />
+   <table class=" table table-bordered table-hover" >
+       <thead>
+           <tr>
+               <th>Fname</th>
+               <th>date</th>
+               <th>salary(Number) </th>
+               <th>salary(Currency) </th>
+               <th>gender</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr ng-repeat="employee in employee | filter:textSearch">
+               <td>{{employee.fName }}</td>
+               <td>{{employee.date | date:"dd/MM/yyyy"}}</td>
+               <td>{{employee.salary |  number:2}}</td>
+               <td>{{employee.salary |  currency }}</td>
+               <td>
+                   {{employee.gender | lowercase}}
+               </td>
+           </tr>
+       </tbody>
+   </table>
+</body>
+
+
+////////////////////////////////////////////module////////////////////////
+var myApp = angular.module("myModule", [])
+                    .controller("myController", function ($scope) {
+
+                        var employees = [
+                            { fName: "Ram", date: new Date("November 28,1990"), salary:5555.335,gender:"Male"},
+                             { fName: "Shyam", date: new Date("November 28,1991"), salary: 5555, gender: "Female" },
+                              { fName: "Mohan", date: new Date("November 28,1992"), salary: 5555, gender: "Male" },
+                               { fName: "Raja", date: new Date("November 28,1993"), salary: 5555, gender: "Male" }
+                        ];
+                        $scope.employee = employees;
+                       
+                    });
