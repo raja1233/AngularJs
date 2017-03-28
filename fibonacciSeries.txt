@@ -1,0 +1,22 @@
+
+/*stored procedure for fibonacci series*/
+create procedure fibonacci(@num int)
+as
+declare @a as int;
+declare @b as int;
+declare @sum as int;
+declare @count as int;
+
+set @a=0;
+set @b=1;
+set @count=0;
+print @a
+print @b
+while @count<@num
+begin
+set @sum=@a+@b;
+print @sum;
+set @a=@b;
+set @b=@sum;
+set @count=@count+1;
+end
